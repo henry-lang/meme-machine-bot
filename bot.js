@@ -3,21 +3,32 @@ const bot = new Discord.Client();
 const fs = require('fs');
 const {prefix, token} = require('./config.json');
 
-var memes = readData('./memes.json');
+var memes = require('./memes.json');
+var len = Object.keys(memes).length;
 
 const cmds = {
     add: {
         args: 1,
         usage: '_add <url>',
         func: function(message, args) {
-            
+            let meme = {
+                user: message.author.id,
+                data: args[0]
+            }
+
+            memes[len] = meme;
+            len++;
+
+            fs.writeFile('./memes.json', JSON.stringify(memes), function(err) {
+                if(err) throw err;
+            });
         }
     }
 }
 
 bot.once('ready', function() {
     console.log('Bot ready!');
-
+    console.log(memes);
     bot.on('message', function(message) {
         if(message.content.startsWith(prefix)) {
             let cmd = message.content.split(' ')[0].substr(1).toLowerCase();
@@ -37,17 +48,8 @@ bot.once('ready', function() {
     });
 });
 
-function readData(fileName) {
-    fs.readFile(fileName, function(err, data) {
-        if (err) throw err;
-        console.log(JSON.parse(data));
-    });
-}
+// function addMeme(fileName, meme) {
 
-function saveData(data, fileName) {
-    fs.writeFile('./memes.json', JSON.stringify(memes), function(err) {
-        if(err) throw err;
-    });
-}
+// }
 
 bot.login(token);
