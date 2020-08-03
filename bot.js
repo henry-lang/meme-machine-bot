@@ -3,20 +3,19 @@ const bot = new Discord.Client();
 const fs = require('fs');
 const {prefix, token} = require('./config.json');
 
-var memes = readFile('./memes.json');
+var memes = readData('./memes.json');
 
 const cmds = {
     add: {
         args: 1,
-        usage: '_add \'url\'',
+        usage: '_add <url>',
         func: function(message, args) {
-
+            
         }
     }
 }
 
 bot.once('ready', function() {
-
     console.log('Bot ready!');
 
     bot.on('message', function(message) {
@@ -38,10 +37,16 @@ bot.once('ready', function() {
     });
 });
 
-function readFile(fileName) {
+function readData(fileName) {
     fs.readFile(fileName, function(err, data) {
         if (err) throw err;
-        return data;
+        console.log(JSON.parse(data));
+    });
+}
+
+function saveData(data, fileName) {
+    fs.writeFile('./memes.json', JSON.stringify(memes), function(err) {
+        if(err) throw err;
     });
 }
 
