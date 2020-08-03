@@ -5,8 +5,8 @@ MemeMachine is a user-requested meme bot for discord.
 It's easy! No setup required currently, although setup may be coming in the future for specific text channels to limit where users can get memes.
 
 # Commands
-###_help:
+_help:
   - Shows a list of all usable commands.
   
-###_meme:
+_meme:
   - Picks a random meme from the public database.
