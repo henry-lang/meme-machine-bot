@@ -7,5 +7,6 @@ It's easy! No setup required currently, although setup may be coming in the futu
 # Commands
 _help:
   - Shows a list of all usable commands.
+  
 _meme:
   - Picks a random meme from the public database.
