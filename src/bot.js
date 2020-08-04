@@ -1,36 +1,32 @@
 const Discord = require('discord.js');
-const bot = new Discord.Client();
-const fs = require('fs');
-const {discord_token, token} = require('./config.json');
+const Config = require('./config.json');
 
-var memes = require('./memes.json');
-var len = Object.keys(memes).length;
+const bot = new Discord.Client();
 
 const cmds = {
     add: {
         args: 1,
         usage: '_add <url>',
         func: function(message, args) {
-            let meme = {
-                user: message.author.id,
-                data: args[0]
-            }
+            // let meme = {
+            //     user: message.author.id,
+            //     data: args[0]
+            // }
 
-            memes[len] = meme;
-            len++;
+            // memes[len] = meme;
+            // len++;
 
-            fs.writeFile('./memes.json', JSON.stringify(memes), function(err) {
-                if(err) throw err;
-            });
+            // fs.writeFile('./memes.json', JSON.stringify(memes), function(err) {
+            //     if(err) throw err;
+            // });
         }
     }
 }
 
 bot.once('ready', function() {
     console.log('Bot ready!');
-    console.log(memes);
     bot.on('message', function(message) {
-        if(message.content.startsWith(prefix)) {
+        if(message.content.startsWith(config.prefix)) {
             let cmd = message.content.split(' ')[0].substr(1).toLowerCase();
             let args = message.content.split(' ');
             args.shift();
@@ -52,4 +48,4 @@ bot.once('ready', function() {
 
 // }
 
-bot.login(token);
+bot.login(config.token);
