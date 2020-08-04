@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fs = require('fs');
-const {prefix, token} = require('./config.json');
+const {discord_token, token} = require('./config.json');
 
 var memes = require('./memes.json');
 var len = Object.keys(memes).length;
