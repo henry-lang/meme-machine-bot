@@ -1,32 +1,31 @@
 const Discord = require('discord.js');
-const Config = require('./config.json');
+const Firebase = require('firebase');
+const Config = require('./Config.json');
 
-const bot = new Discord.Client();
-
-const cmds = {
+var bot = new Discord.Client();
+var cmds = {
     add: {
-        args: 1,
-        usage: '_add <url>',
+        args: 2,
+        usage: '_add <url> <category>',
         func: function(message, args) {
-            // let meme = {
-            //     user: message.author.id,
-            //     data: args[0]
-            // }
+            let url = args[0];
+            let category = args[1];
 
-            // memes[len] = meme;
-            // len++;
-
-            // fs.writeFile('./memes.json', JSON.stringify(memes), function(err) {
-            //     if(err) throw err;
-            // });
+            memes.child(category).push({
+                url: url,
+                score: 0
+            });
         }
     }
 }
 
+Firebase.initializeApp(Config.firebase);
+var memes = Firebase.database().ref('memes');
+
 bot.once('ready', function() {
     console.log('Bot ready!');
     bot.on('message', function(message) {
-        if(message.content.startsWith(config.prefix)) {
+        if(message.content.startsWith(Config.prefix)) {
             let cmd = message.content.split(' ')[0].substr(1).toLowerCase();
             let args = message.content.split(' ');
             args.shift();
@@ -48,4 +47,4 @@ bot.once('ready', function() {
 
 // }
 
-bot.login(config.token);
+bot.login(Config.discord_token);
