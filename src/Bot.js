@@ -13,23 +13,19 @@ var cmds = {
             let category = args[1];
 
             if(IsImageUrl(url)) {
-                message.channel.send("Image is valid url.");
+                server.child(`${message.guild.id}/memes/${category}`).push({
+                    url: url,
+                    author: message.author.id
+                })
             } else {
-                message.channel.send(":x: The url you sent is not an image.").then(function(msg){
-                    msg.delete({timeout: 5000});
-                });
-                message.delete({timeout: 5000});
+                message.channel.send(":x: The url you sent is not an image.");
             }
-            // memes.child(category).push({
-            //     url: url,
-            //     score: 0
-            // });
         }
     }
 }
 
 Firebase.initializeApp(Config.firebase);
-var memes = Firebase.database().ref('memes');
+var server = Firebase.database().ref('server');
 
 bot.once('ready', function() {
     console.log('Bot ready!');
