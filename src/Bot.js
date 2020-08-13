@@ -2,13 +2,12 @@ const Discord = require('discord.js');
 const Firebase = require('firebase');
 const Config = require('./Config.json');
 const IsImageUrl = require('is-image-url');
-const { syncBuiltinESMExports } = require('module');
 
 var bot = new Discord.Client();
 var cmds = {
     add: {
         args: 2,
-        usage: '_add <url> <category>',
+        usage: '_add <category> (Make sure an image is attached!)',
         func: function(message, args) {
             let url = args[0];
             let category = args[1];
@@ -17,9 +16,9 @@ var cmds = {
                 message.channel.send("Image is valid url.");
             } else {
                 message.channel.send(":x: The url you sent is not an image.").then(function(msg){
-                    msg.delete({timeout: 1000});
+                    msg.delete({timeout: 5000});
                 });
-                message.delete({timeout: 1000});
+                message.delete({timeout: 5000});
             }
             // memes.child(category).push({
             //     url: url,
